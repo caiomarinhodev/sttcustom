@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load form_utils %}
+{% block content %}
+    <hr/>
+    <div class="row text-center">
+        <div class="col-sm-4">
+            <div class="panel panel-body">
+                <a href="{% url 'upload' %}" class="btn btn-block btn-large btn-lg btn-secondary">
+                    <i class="fa fa-upload"></i> Upload Audio
+                </a>
+            </div>
+        </div>
+{#        <div class="col-sm-4">#}
+{#            <div class="panel panel-body">#}
+{#                <a href="#" class="btn btn-block btn-large btn-lg btn-secondary">#}
+{#                    <i class="fa fa-youtube"></i> Youtube Video#}
+{#                </a>#}
+{#            </div>#}
+{#        </div>#}
+        <div class="col-sm-4">
+            <div class="panel panel-body">
+                <a href="{% url 'recorder' %}" class="btn btn-block btn-large btn-lg btn-secondary">
+                    <i class="fa fa-microphone"></i> Record Audio
+                </a>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

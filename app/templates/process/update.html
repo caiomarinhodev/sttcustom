@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load form_utils %}
+{% block content %}
+    <h3 class="page-header">Update Process</h3>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="col-xs-12"> 
+ <div class="form-group"> 
+ <label>User:</label> 
+{{ form.user }} 
+ </div> 
+ </div> 
+<div class="col-xs-12"> 
+ <div class="form-group"> 
+ <label>Audio:</label> 
+{{ form.audio }} 
+ </div> 
+ </div> 
+<div class="col-xs-12"> 
+ <div class="form-group"> 
+ <label>Process_id:</label> 
+{{ form.process_id }} 
+ </div> 
+ </div> 
+<div class="col-xs-12"> 
+ <div class="form-group"> 
+ <label>Status:</label> 
+{{ form.status }} 
+ </div> 
+ </div> 
+<div class="col-xs-12"> 
+ <div class="form-group"> 
+ <label>Result:</label> 
+{{ form.result }} 
+ </div> 
+ </div> 
+
+                    </div>
+                    <div class="panel-footer">
+                        <div id="actions" class="row">
+                            <div class="col-md-12">
+                               <button id="btn_atualizar" class="btn btn-primary" type="submit">
+                                    Update
+                                </button>
+                                <a href="{% url 'PROCESS_list' %}" class="btn btn-default">Back</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#process_link').addClass('active');
+
+            $('#id_user').select2({
+    ajax: {
+        url: '/api/user/',
+        dataType: 'json',
+        data: function (params) {
+            var query = {
+                id: params.term
+            }
+            return query;
+        },
+        processResults: function (data) {
+            new_data = []
+            data.forEach(function(elem){
+                new_data.push({
+                    id: elem.id,
+                    text: elem.id
+                });
+            });
+            return {
+                results: new_data
+            };
+        }
+    }
+});
+$('#id_audio').select2({
+    ajax: {
+        url: '/api/audio/',
+        dataType: 'json',
+        data: function (params) {
+            var query = {
+                id: params.term
+            }
+            return query;
+        },
+        processResults: function (data) {
+            new_data = []
+            data.forEach(function(elem){
+                new_data.push({
+                    id: elem.id,
+                    text: elem.id
+                });
+            });
+            return {
+                results: new_data
+            };
+        }
+    }
+});
+
+        });
+    </script>
+{% endblock %}
