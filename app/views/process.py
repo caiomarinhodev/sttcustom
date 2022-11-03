@@ -14,7 +14,6 @@ from django.views.generic.list import ListView
 
 from django.db.models import Q
 
-
 try:
     from django.core.urlresolvers import reverse_lazy
 except ImportError:
@@ -31,6 +30,7 @@ from app.utils import upload_image, upload_file
 
 import django_filters
 
+
 class ProcessFormSetManagement(object):
     formsets = []
 
@@ -38,7 +38,7 @@ class ProcessFormSetManagement(object):
         context = self.get_context_data()
         with transaction.atomic():
             self.object = form.save()
-            
+
             for Formset in self.formsets:
                 formset = context["{}set".format(str(Formset.model.__name__).lower())]
                 if formset.is_valid():
@@ -96,7 +96,7 @@ class ListFull(LoginRequiredMixin, ProcessMixin, ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        filter =  ProcessFilter(self.request.GET, queryset)
+        filter = ProcessFilter(self.request.GET, queryset)
         queryset = self.search_general(filter.qs)
         queryset = self.ordering_data(queryset)
         return queryset
@@ -106,7 +106,9 @@ class ListFull(LoginRequiredMixin, ProcessMixin, ListView):
             self.search = self.request.GET['search']
             if self.search:
                 search = self.search
-                qs = qs.filter(Q(id__icontains=search)| Q(user__id__icontains=search)| Q(audio__id__icontains=search)| Q(status__icontains=search))
+                qs = qs.filter(
+                    Q(id__icontains=search) | Q(user__id__icontains=search) | Q(audio__id__icontains=search) | Q(
+                        status__icontains=search))
         return qs
 
     def get_ordering(self):
@@ -263,13 +265,17 @@ class Delete(LoginRequiredMixin, ProcessMixin, PermissionRequiredMixin, DeleteVi
 
 class ProcessListJson(BaseDatatableView):
     model = Process
-    columns = ("id", "user", "audio", "status")
-    order_columns = ["id", "user__id", "audio__id", "status"]
+    columns = ("id", "user", "audio", "created_at", "status")
+    order_columns = ["id",]
     max_display_length = 500
+
+    def get_initial_queryset(self):
+        return Process.objects.filter(user=self.request.user)
 
     def filter_queryset(self, qs):
         search = self.request.GET.get('search[value]', None)
         if search:
-            qs = qs.filter(Q(id__icontains=search)| Q(user__id__icontains=search)| Q(audio__id__icontains=search)| Q(status__icontains=search))
+            qs = qs.filter(Q(id__icontains=search) | Q(user__id__icontains=search) | Q(audio__id__icontains=search) | Q(
+                status__icontains=search))
         filter = ProcessFilter(self.request.GET, qs)
         return filter.qs

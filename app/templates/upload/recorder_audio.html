@@ -167,6 +167,7 @@
 
             //save to disk link
             link.href = url;
+            link.className = 'btn btn-default';
             link.download = filename + ".wav"; //download forces the browser to donwload the file using the  filename
             link.innerHTML = "Save to disk";
 
@@ -182,6 +183,7 @@
             //upload link
             var upload = document.createElement('a');
             upload.href = "#";
+            upload.className = 'btn btn-primary';
             upload.innerHTML = "Upload";
             upload.addEventListener("click", function (event) {
 
@@ -205,7 +207,7 @@
                         $('#loading').hide();
                         console.log(data);
                         if (data['message'] === 'ok') {
-                            window.location.href = '{% url 'PROCESS_list' %}';
+                            window.location.href = '{% url 'view' %}?pk=' + data['pk'];
                         }
                     },
                     error: function (data) {

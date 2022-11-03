@@ -4,31 +4,22 @@
 {% block content %}
     <div id="top" class="row">
         <div class="col-sm-3">
-            <h2> {{ model_name_plural }}</h2>
+            <h2> Audios</h2>
         </div>
     </div> <!-- /#top -->
     <hr/>
     <form id="advancedForm" method="get" action="{% url 'PROCESS_list' %}">
         {% csrf_token %}
-        <div class="row">
-            <div class="col-sm-12">
-
-                {{ filter.form.as_p }}
-                 <button type="button" class="btn btn-default" id="clear"><i class="fa fa-close"></i> Clear</button>
-
-
-            </div>
-        </div>
-        <hr/>
         <div id="list" class="row">
             <div class="col-md-12">
                 <table id="table" class="table table-striped" cellspacing="0" cellpadding="0">
                     <thead>
                     <tr>
-                         <th>ID</th> 
- <th>USER</th> 
- <th>AUDIO</th> 
- <th>STATUS</th> 
+                        <th>ID</th>
+                        <th>USER</th>
+                        <th>AUDIO</th>
+                        <th>CREATED_AT</th>
+                        <th>STATUS</th>
 
                         <th class="actions">Actions</th>
                     </tr>
@@ -42,7 +33,8 @@
     </form>
     <script type="text/javascript">
 
-    $(document).ready(function () {
+        $(document).ready(function () {
+            $('.audios').addClass('active');
 
             function getData() {
                 var formData = $('#advancedForm').serializeArray().reduce(function (obj, item) {
@@ -54,7 +46,7 @@
 
             $('#process_link').addClass('active');
             var table = $('#table').DataTable({
-            "processing": true,
+                "processing": true,
                 "serverSide": true,
                 "ajax": "{% url 'PROCESS_list_json' %}",
                 "ajax": {
@@ -70,7 +62,7 @@
                         "render": function (data, type, row, meta) {
                             return '<a href="/process/' + row[0] + '/"><i\n' +
                                 '                                    class="fa fa-eye"></i></a>&nbsp;&nbsp;' +
-                                '<a href="/process/'+row[0]+'/delete/"> <i\n' +
+                                '<a href="/process/' + row[0] + '/delete/"> <i\n' +
                                 '                                    class="fa fa-close"></i></a>';
                         }
                     }
@@ -104,7 +96,7 @@
                 table.search('').draw();
             });
 
-            $('#clear').click(function (){
+            $('#clear').click(function () {
                 $("form")[0].reset();
                 table.search('').draw();
             });

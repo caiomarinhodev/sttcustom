@@ -56,14 +56,13 @@ class UploadAudioView(APIView):
             audio.cloudinary_url = result['secure_url']
             audio.save()
 
-            # download_file(os.path.join('audios', file.name), result['secure_url'])
-
             text = transcription_audio(file, lang=language, audio_type='wav')
 
             process = Process()
             process.user = request.user
             process.audio = audio
             process.status = 2
+            process.language = language
             process.result = text
             process.save()
             return Response({'message': 'ok', 'pk': process.pk}, status=status.HTTP_201_CREATED)

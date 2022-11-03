@@ -97,39 +97,34 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="{% url 'index' %}">Index</a></li>
+                <li class="index"><a href="{% url 'index' %}"><i class="fa fa-home"></i> Home</a></li>
                 <li class="upload">
-                    <a href="{% url 'upload' %}" class="btn btn-block btn-large btn-lg btn-secondary">
+                    <a href="{% url 'upload' %}">
                         <i class="fa fa-upload"></i> Upload Audio
                     </a>
                 </li>
-{#                <li class="youtube">#}
-{#                    <a href="#" class="btn btn-block btn-large btn-lg btn-secondary">#}
-{#                        <i class="fa fa-youtube"></i> Youtube Video#}
-{#                    </a>#}
-{#                </li>#}
+                {#                <li class="youtube">#}
+                {#                    <a href="#" class="btn btn-block btn-large btn-lg btn-secondary">#}
+                {#                        <i class="fa fa-youtube"></i> Youtube Video#}
+                {#                    </a>#}
+                {#                </li>#}
                 <li class="recorder">
-                    <a href="{% url 'recorder' %}" class="btn btn-block btn-large btn-lg btn-secondary">
+                    <a href="{% url 'recorder' %}">
                         <i class="fa fa-microphone"></i> Record Audio
                     </a>
                 </li>
-                <li><a href="{% url 'account_logout' %}">Logout</a></li>
+                <li class="audios">
+                <li id="process_link"><a href="{% url 'PROCESS_list' %}"><i class="fa fa-volume-up"></i> Audios</a></li>
+
+                </li>
+                <li><a href="{% url 'account_logout' %}"><i class="fa fa-sign-out"></i> Logout</a></li>
             </ul>
         </div>
     </div>
 </nav>
 
 <div id="main" class="container-fluid" style="margin-top: 50px">
-    <div class="col-sm-2">
-        <nav class="nav-sidebar">
-            <ul class="nav">
-                {% include 'menu.html' %}
-                <li class="nav-divider"></li>
-                <li><a href="{% url 'account_logout' %}"><i class="glyphicon glyphicon-off"></i> Sign in</a></li>
-            </ul>
-        </nav>
-    </div>
-    <div class="col-sm-10">
+    <div class="col-sm-12">
         {% include 'loading.html' %}
         {% block content %}
 

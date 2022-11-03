@@ -33,6 +33,7 @@ STATUS_PROCESS = (
 class Process(Timestamp):
     user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
     audio = models.ForeignKey(Audio, blank=True, null=True, on_delete=models.CASCADE)
+    language = models.CharField(max_length=255, blank=True, null=True)
     process_id = models.TextField(blank=True, null=True, default=str(uuid.uuid4()))
     status = models.IntegerField(choices=STATUS_PROCESS, default=1)
     result = models.TextField(blank=True, null=True)

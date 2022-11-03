@@ -2,7 +2,7 @@ from django.urls import path, include
 
 from app import conf
 from app.urls_api import api_urlpatterns
-from app.views.recorder import IndexView, AudioView, RecordView
+from app.views.recorder import IndexView, AudioView, RecordView, RedirectToViewProcess
 
 urlpatterns = []
 
@@ -15,6 +15,7 @@ urlpatterns += [
     path('', IndexView.as_view(), name='index'),
     path('upload', AudioView.as_view(), name='upload'),
     path('recorder', RecordView.as_view(), name='recorder'),
+    path('view', RedirectToViewProcess.as_view(), name='view'),
 ]
 
 from app.views import process

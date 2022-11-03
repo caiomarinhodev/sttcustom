@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, RedirectView
 from django.views.generic.edit import (
     FormView
 )
@@ -39,3 +39,15 @@ class RecordView(LoginRequiredMixin, FormView):
     login_url = '/admin/login/'
     template_name = 'upload/recorder_audio.html'
     form_class = AudioForm
+
+
+class RedirectToViewProcess(LoginRequiredMixin, RedirectView):
+    """
+    Redirect to view process
+    """
+    login_url = '/admin/login/'
+    permanent = False
+
+    def get_redirect_url(self, *args, **kwargs):
+        data = self.request.GET
+        return reverse('PROCESS_detail', kwargs={'pk': data['pk']})
